@@ -1,0 +1,136 @@
+:root.light {
+  --bg: #f0f2f5;
+  --card: #fff;
+  --back: #3b82f6;
+  --text: #111;
+}
+:root.dark {
+  --bg: #1a1a2e;
+  --card: #16213e;
+  --back: #0f3460;
+  --text: #eee;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+h1 {
+  text-align: center;
+  width: 100%;
+}
+
+.control-bar,
+.status {
+  margin: 10px 0;
+  text-align: center;
+}
+
+button,
+select {
+  padding: 8px 12px;
+  margin: 0 4px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+}
+
+#game_grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 800px;
+  margin: 20px auto;
+  perspective: 1000px;
+  gap: 12px; /* distance between cards */
+}
+
+.card {
+  width: 100px;
+  height: 140px;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+  transform-origin: center center;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* makesure it is rotate in the center */
+.card.flip {
+  transform: rotateY(180deg);
+}
+
+.front_face,
+.back_face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.front_face {
+  transform: rotateY(180deg);
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back_face {
+  background: var(--back);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.front_face img,
+.back_face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* hover style */
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card:hover.flip {
+  transform: rotateY(180deg) scale(1.02);
+}
+
+/* popup window */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: white;
+  color: black;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
