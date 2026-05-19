@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const matchedEl = document.getElementById("matched");
   const totalEl = document.getElementById("total");
   const timeEl = document.getElementById("time");
+  const leftNumEl = document.getElementById("leftNum");
   const diffEl = document.getElementById("diff");
   const themeBtn = document.getElementById("themeBtn"); //dark mode
   const startBtn = document.getElementById("startBtn");
@@ -29,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
     time = 60,
     timer;
   let gameOn = false;
+  let totalPair = 0;
+
   //backgound image
   const backImg = "back.webp";
   function randomBack() {
@@ -74,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function buildGrid() {
     const d = diffEl.value; //difficult level
     const { pairs } = config[d]; //how many pairs you need for win
+    totalPairs = pairs;
     const pokes = await getPokemons(pairs);
     const deck = [...pokes, ...pokes];
     cards = shuffle(deck);
@@ -94,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     totalEl.textContent = pairs;
     matchedEl.textContent = 0;
+    leftNumEl.textContent = pairs;
   }
   // flip function
   function flipCard(card, i) {
@@ -115,7 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (same) {
       matched.push(a.idx, b.idx);
-      matchedEl.textContent = matched.length / 2;
+      let nowMatched = matched.length / 2;
+      leftNumEl.textContent = totalPairs - matched.length / 2;
+
       flipped = [];
       if (matched.length === cards.length) win();
     } else {
@@ -151,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     timeEl.textContent = 0;
 
     if (grid) grid.innerHTML = "";
+    if (leftNumEl) leftNumEl.textContent = 0;
   }
 
   function win() {
